@@ -69,3 +69,10 @@ class Sensor:
         if self.task == 'i':
             self.tiempoInactivo += 1
             self.tiempoActivo = 0
+
+class Sink:
+    def __init__(self):
+        self.x = sinkX
+        self.y = sinkY
+        # 's' => sink
+        self.task = 's'
