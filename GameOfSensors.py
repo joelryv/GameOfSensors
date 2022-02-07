@@ -57,3 +57,15 @@ class Sensor:
         elif self.task == 'i':
             if self.vecinosActivos == 3:
                 self.nextTask = 'a'
+    
+    def cicloTrabajo(self):
+        if self.tiempoActivo > 10:
+            self.nextTask = 'i'
+        if self.tiempoInactivo > 10:
+            self.nextTask = 'a'
+        if self.task == 'a':
+            self.tiempoActivo += 1
+            self.tiempoInactivo = 0
+        if self.task == 'i':
+            self.tiempoInactivo += 1
+            self.tiempoActivo = 0
