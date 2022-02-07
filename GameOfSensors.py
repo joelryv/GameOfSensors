@@ -11,6 +11,11 @@ if __name__ == '__main__':
     eElec = 50e-09
     eAmp = 100e-12
     pcktSize = 500*8
+    pcktTx = pcktSize*(eElec + (eAmp*(txRange**2)))
+    pcktRx = pcktSize*eElec
+    helloSize = 200
+    helloTx = helloSize*(eElec + (eAmp*(txRange**2)))
+    helloRx = helloSize*eElec
 
 class Sensor:
     def __init__(self, task, x, y):
