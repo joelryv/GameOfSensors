@@ -53,7 +53,7 @@ class Sensor:
             if self.vecinosActivos < 2:
                 self.nextTask = 'i'
             if self.vecinosActivos > 3:
-                self.task = 'i'
-        elif self.task == 'idle':
+                self.nextTask = 'i'
+        elif self.task == 'i':
             if self.vecinosActivos == 3:
-                self.task = 'active'
+                self.nextTask = 'a'
