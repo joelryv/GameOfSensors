@@ -25,3 +25,9 @@ class Sensor:
         self.tiempoActivo = 0
         self.tiempoInactivo = 0
         self.bateria = initialEnergy
+
+    def creaVecindad(self, todos):
+        for sensor in todos:
+            if self != sensor:
+                if (self.x-sensor.x)**2 + (self.y-sensor.y)**2 <= txRange**2: # Vecindad de Moore de radio 1
+                    self.vecindad.append(sensor)
