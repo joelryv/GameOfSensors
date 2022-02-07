@@ -20,10 +20,13 @@ if __name__ == '__main__':
 class Sensor:
     def __init__(self, task, x, y):
         self.task = task
+        self.nextTask = ''
         if task == '':
             # 'a' => active
             # 'i' => idle
-            self.task = np.random.choice(['a', 'i'])
+            self.nextTask = np.random.choice(['a', 'i'])
+        else:
+            self.nextTask = self.task
         self.x = x
         self.y = y
         self.vecindad = []
@@ -36,3 +39,21 @@ class Sensor:
             if self != sensor:
                 if (self.x-sensor.x)**2 + (self.y-sensor.y)**2 <= txRange**2: # Vecindad de Moore de radio 1
                     self.vecindad.append(sensor)
+
+    def activos(self):
+        self.vecinosActivos = 0
+        for elemento in self.vecindad:
+            if elemento.task!='i':
+                self.vecinosActivos += 1
+        self.bateria -= self.vecinosActivos * helloRx
+
+    def juegoVida(self):
+        if self.task == 'a':
+            self.bateria -= helloTx
+            if self.vecinosActivos < 2:
+                self.nextTask = 'i'
+            if self.vecinosActivos > 3:
+                self.task = 'i'
+        elif self.task == 'idle':
+            if self.vecinosActivos == 3:
+                self.task = 'active'
