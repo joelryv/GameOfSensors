@@ -33,12 +33,15 @@ class Sensor:
         self.tiempoActivo = 0
         self.tiempoInactivo = 0
         self.bateria = initialEnergy
+        self.reachSink = False
 
     def creaVecindad(self, sensores):
         for sensor in sensores:
             if self != sensor:
                 if (self.x-sensor.x)**2 + (self.y-sensor.y)**2 <= txRange**2: # Vecindad de Moore de radio 1
                     self.vecindad.append(sensor)
+            if (self.x-sinkX)**2 + (self.y-sinkY)**2 <= txRange**2:
+                self.reachSink = True
 
     def activos(self):
         self.vecinosActivos = 0
