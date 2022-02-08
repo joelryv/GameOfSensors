@@ -8,9 +8,9 @@ class Sensor:
         if task == '':
             # 'a' => active
             # 'i' => idle
-            self.nextTask = np.random.choice(['a', 'i'])
+            self.task = np.random.choice(['a', 'i'])
         else:
-            self.nextTask = self.task
+            self.task = self.task
         self.x = x
         self.y = y
         self.vecindad = []
@@ -36,20 +36,18 @@ class Sensor:
 
     def juegoVida(self):
         if self.task == 'a':
+            self.nextTask = 'a'
             self.bateria -= GoS.helloTx
             if self.vecinosActivos < 2:
                 self.nextTask = 'i'
             if self.vecinosActivos > 3:
                 self.nextTask = 'i'
         elif self.task == 'i':
+            self.nextTask = 'i'
             if self.vecinosActivos == 3:
                 self.nextTask = 'a'
     
     def cicloTrabajo(self):
-        if self.tiempoActivo > 10:
-            self.nextTask = 'i'
-        if self.tiempoInactivo > 10:
-            self.nextTask = 'a'
         if self.task == 'a':
             self.tiempoActivo += 1
             self.tiempoInactivo = 0
@@ -59,12 +57,18 @@ class Sensor:
         if self.task == 'tx':
             self.tiempoActivo = 1
             self.tiempoInactivo = 0
+        if self.tiempoActivo >= 10:
+            self.nextTask = 'i'
+        if self.tiempoInactivo >= 10:
+            self.nextTask = 'a'
 
     def aStar(self):
         if self.task == 'tx':
+            self.nextTask = 'tx'
             if self.reachSink:
                 self.bateria -= GoS.pcktTx
                 self.nextTask = 'i'
+                print("mensaje recibido")
                 GoS.canalLibre = True
             else:
                 actualF = np.inf
@@ -79,8 +83,9 @@ class Sensor:
                             actualF = vecinoF
                             if vecinoH < actualH:
                                 nextJump = vecino
+                print('el siguiente salto es:', nextJump.x, nextJump.y, nextJump.nextTask)
                 if nextJump.x != self.x or nextJump.y != self.y:
                     self.bateria -= GoS.pcktTx
                     self.nextTask = 'i'
                     nextJump.bateria -= GoS.pcktRx
-                    nextJump.NextTask = 'tx'
+                    nextJump.nextTask = 'tx'
