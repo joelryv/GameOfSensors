@@ -2,9 +2,6 @@ import numpy as np
 from sensors import Sensor
 from sinks import Sink
 
-if __name__ == '__main__':
-    sink  = Sink()
-
 canalLibre = True
 areaX = 200
 areaY = 200
@@ -21,3 +18,18 @@ pcktRx = pcktSize*eElec
 helloSize = 200
 helloTx = helloSize*(eElec + (eAmp*(txRange**2)))
 helloRx = helloSize*eElec
+
+def creaNodos(n):
+    nodos = []
+    for _ in range(n):
+        x = np.random.random()*areaX
+        y = np.random.random()*areaY
+        nodos.append(Sensor('', x, y))
+    return nodos
+
+##################################################
+##################################################
+
+if __name__ == '__main__':
+    sink  = Sink()
+    sensores = creaNodos(nSensors)
