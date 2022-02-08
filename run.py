@@ -23,6 +23,8 @@ def creaMensaje(nodos):
 def dinamica(nodos):
     for nodo in nodos:
         if nodo.bateria < GoS.helloTx:
+            for vecino in nodo.vecindad:
+                vecino.vecindad.remove(nodo)
             nodos.remove(nodo)
             break
         nodo.activos()
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     for nodo in sensores:
         nodo.creaVecindad(sensores)
 
-    while len(sensores)==GoS.nSensors:
+    while len(sensores) >= GoS.nSensors:
         if GoS.canalLibre == True:
             creaMensaje(sensores)
             recibidos += 1
