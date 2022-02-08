@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import GameOfSensors as GoS
 
 class Sensor:
@@ -38,13 +39,14 @@ class Sensor:
         if self.task == 'a':
             self.nextTask = 'a'
             self.bateria -= GoS.helloTx
-            if self.vecinosActivos < 2:
+            if self.vecinosActivos < math.floor((2/8)*len(self.vecindad)):
                 self.nextTask = 'i'
-            if self.vecinosActivos > 3:
+            if self.vecinosActivos > math.ceil((3/8)*len(self.vecindad)):
                 self.nextTask = 'i'
         elif self.task == 'i':
             self.nextTask = 'i'
-            if self.vecinosActivos == 3:
+            rb = int((3/8)*len(self.vecindad))
+            if self.vecinosActivos == rb:
                 self.nextTask = 'a'
     
     def cicloTrabajo(self):
@@ -57,9 +59,9 @@ class Sensor:
         if self.task == 'tx':
             self.tiempoActivo = 1
             self.tiempoInactivo = 0
-        if self.tiempoActivo >= 10:
+        if self.tiempoActivo >= 5:
             self.nextTask = 'i'
-        if self.tiempoInactivo >= 10:
+        if self.tiempoInactivo >= 5:
             self.nextTask = 'a'
 
     def aStar(self):

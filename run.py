@@ -49,6 +49,9 @@ if __name__ == '__main__':
             creaMensaje(sensores)
             recibidos += 1
         dinamica(sensores)
+        #for nodo in sensores:
+        #    print(len(nodo.vecindad), nodo.vecinosActivos, nodo.task, nodo.nextTask)
         updateTask(sensores)
+        #input()
     
     print(recibidos)
