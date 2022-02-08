@@ -5,6 +5,7 @@ from sinks import Sink
 if __name__ == '__main__':
     sink  = Sink()
 
+canalLibre = True
 areaX = 200
 areaY = 200
 nSensors = 50

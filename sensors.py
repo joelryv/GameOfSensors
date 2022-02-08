@@ -59,3 +59,28 @@ class Sensor:
         if self.task == 'tx':
             self.tiempoActivo = 1
             self.tiempoInactivo = 0
+
+    def aStar(self):
+        if self.task == 'tx':
+            if self.reachSink:
+                self.bateria -= GoS.pcktTx
+                self.nextTask = 'i'
+                GoS.canalLibre = True
+            else:
+                actualF = np.inf
+                actualH = ((self.x - GoS.sinkX)**2 + (self.y - GoS.sinkY)**2)
+                nextJump = self
+                for vecino in self.vecindad:
+                    if vecino.task != 'i':
+                        vecinoG = ((self.x - vecino.x)**2 + (self.y - vecino.y)**2)
+                        vecinoH = ((vecino.x - GoS.sinkX)**2 + (vecino.y - GoS.sinkY)**2)
+                        vecinoF = vecinoG + vecinoH
+                        if vecinoF < actualF:
+                            actualF = vecinoF
+                            if vecinoH < actualH:
+                                nextJump = vecino
+                if nextJump.x != self.x or nextJump.y != self.y:
+                    self.bateria -= GoS.pcktTx
+                    self.nextTask = 'i'
+                    nextJump.bateria -= GoS.pcktRx
+                    nextJump.NextTask = 'tx'
