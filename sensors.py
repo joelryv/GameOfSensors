@@ -68,7 +68,6 @@ class Sensor:
             if self.reachSink:
                 self.bateria -= GoS.pcktTx
                 self.nextTask = 'i'
-                print("mensaje recibido")
                 GoS.canalLibre = True
             else:
                 actualF = np.inf
@@ -83,7 +82,6 @@ class Sensor:
                             actualF = vecinoF
                             if vecinoH < actualH:
                                 nextJump = vecino
-                print('el siguiente salto es:', nextJump.x, nextJump.y, nextJump.nextTask)
                 if nextJump.x != self.x or nextJump.y != self.y:
                     self.bateria -= GoS.pcktTx
                     self.nextTask = 'i'

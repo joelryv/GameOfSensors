@@ -36,16 +36,17 @@ def updateTask(nodos):
         nodo.task = nodo.nextTask
 
 if __name__ == '__main__':
+    recibidos = 0 
     sink  = Sink()
     sensores = creaNodos(GoS.nSensors)
     for nodo in sensores:
         nodo.creaVecindad(sensores)
 
-    for i in range(15):
+    while len(sensores)==GoS.nSensors:
         if GoS.canalLibre == True:
             creaMensaje(sensores)
-        for sensor in sensores:
-            if sensor.task == 'tx':
-                print(sensor.x, sensor.y)
+            recibidos += 1
         dinamica(sensores)
         updateTask(sensores)
+    
+    print(recibidos)
