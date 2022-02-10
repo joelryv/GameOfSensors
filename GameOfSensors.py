@@ -1,13 +1,14 @@
 import numpy as np
 
+nPcktTx = 0
 canalLibre = True
 np.random.seed(0)
 areaX = 200
 areaY = 200
 nSensors = 50
 txRange = 80
-sinkX = 200
-sinkY = 200
+sinkX = 100
+sinkY = 100
 initialEnergy = 5
 eElec = 50e-09
 eAmp = 100e-12

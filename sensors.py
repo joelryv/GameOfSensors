@@ -19,6 +19,7 @@ class Sensor:
         self.tiempoInactivo = 0
         self.bateria = GoS.initialEnergy
         self.reachSink = False
+        self.timeTx = 0
 
     def creaVecindad(self, sensores):
         for sensor in sensores:
@@ -64,13 +65,22 @@ class Sensor:
         if self.tiempoInactivo >= 5:
             self.nextTask = 'a'
 
-    def aStar(self):
+    def aStar(self, nodos):
         if self.task == 'tx':
             self.nextTask = 'tx'
-            if self.reachSink:
+            self.timeTx += 1
+            if self.timeTx > 8:
+                self.nextTask = 'i'
+                GoS.canalLibre = True
+                self.timeTx = 0
+            elif self.reachSink:
+                GoS.nPcktTx += 1
                 self.bateria -= GoS.pcktTx
                 self.nextTask = 'i'
                 GoS.canalLibre = True
+                self.timeTx = 0
+                if GoS.nPcktTx%4000 == 0:
+                    print(GoS.nPcktTx, len(nodos))
             else:
                 actualF = np.inf
                 actualH = ((self.x - GoS.sinkX)**2 + (self.y - GoS.sinkY)**2)
@@ -87,5 +97,6 @@ class Sensor:
                 if nextJump.x != self.x or nextJump.y != self.y:
                     self.bateria -= GoS.pcktTx
                     self.nextTask = 'i'
+                    self.timeTx = 0
                     nextJump.bateria -= GoS.pcktRx
                     nextJump.nextTask = 'tx'

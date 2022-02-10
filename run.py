@@ -23,6 +23,8 @@ def creaMensaje(nodos):
 def dinamica(nodos):
     for nodo in nodos:
         if nodo.bateria < GoS.helloTx:
+            if nodo.task == 'tx':
+                GoS.canalLibre = True
             for vecino in nodo.vecindad:
                 vecino.vecindad.remove(nodo)
             nodos.remove(nodo)
@@ -31,7 +33,7 @@ def dinamica(nodos):
         nodo.juegoVida()
         nodo.cicloTrabajo()
     for nodo in nodos:
-        nodo.aStar()
+        nodo.aStar(nodos)
 
 def updateTask(nodos):
     for nodo in nodos:
@@ -44,14 +46,16 @@ if __name__ == '__main__':
     for nodo in sensores:
         nodo.creaVecindad(sensores)
 
-    while len(sensores) >= GoS.nSensors:
+    while len(sensores) >= 0:
         if GoS.canalLibre == True:
             creaMensaje(sensores)
-            recibidos += 1
         dinamica(sensores)
         #for nodo in sensores:
         #    print(len(nodo.vecindad), nodo.vecinosActivos, nodo.task, nodo.nextTask)
         updateTask(sensores)
         #input()
-    
-    print(recibidos)
+#        if GoS.nPcktTx > 8000:
+#            for nodo in sensores:
+#                if nodo.task  == 'tx':
+#                    print(GoS.nPcktTx, len(sensores))
+#                    print(nodo.x, nodo.y)
