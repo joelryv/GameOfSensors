@@ -23,7 +23,7 @@ def creaMensaje(nodos):
 def dinamica(nodos):
     for nodo in nodos:
         if nodo.bateria < GoS.helloTx:
-            if nodo.task == 'tx':
+            if nodo.task == 'tx' or nodo.nextTask == 'tx':
                 GoS.canalLibre = True
             for vecino in nodo.vecindad:
                 vecino.vecindad.remove(nodo)

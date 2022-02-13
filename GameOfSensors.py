@@ -15,6 +15,6 @@ eAmp = 100e-12
 pcktSize = 500*8
 pcktTx = pcktSize*(eElec + (eAmp*(txRange**2)))
 pcktRx = pcktSize*eElec
-helloSize = 200
+helloSize = 24
 helloTx = helloSize*(eElec + (eAmp*(txRange**2)))
 helloRx = helloSize*eElec

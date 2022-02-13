@@ -34,12 +34,12 @@ class Sensor:
         for elemento in self.vecindad:
             if elemento.task!='i':
                 self.vecinosActivos += 1
-#        self.bateria -= self.vecinosActivos * GoS.helloRx
+        self.bateria -= self.vecinosActivos * GoS.helloRx
 
     def juegoVida(self):
         if self.task == 'a':
             self.nextTask = 'a'
-#            self.bateria -= GoS.helloTx
+            self.bateria -= GoS.helloTx
             if self.vecinosActivos < math.floor((2/8)*len(self.vecindad)):
                 self.nextTask = 'i'
             if self.vecinosActivos > math.ceil((3/8)*len(self.vecindad)):
